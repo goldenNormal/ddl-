@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加作业</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../res/bootstrap-4.4.1/css/bootstrap.min.css">
+    <script src="../res/jquery.js"></script>
+    <script src="../res/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../res/mdui-v0.4.3/css/mdui.css">
+    <style>
+        form{
+            /*background-color: rgba(0,0,0,0.5);*/
+            width:600px;
+            height: 400px;
+            margin-top: 200px;
+            margin-left: 30%;
+            margin-right: 30%;
+        }
+span{
+    font-size: 20px;
+}
+    </style>
+</head>
+<body>
+<form action="" method="post">
+   <span> 作业名 </span><input type="text" id="name" >
+    <hr>
+    <span> ddl </span><input type="date" id="time">
+    <hr>
+    <span>详情 </span><textarea rows="15" cols="30" id="content" ></textarea>
+    <hr>
+    <button id="submit" class="btn btn-primary">提交</button>
+    <a id="back" class="btn btn-warning">返回</a>
+</form>
+
+<script>
+    document.getElementById('back').onclick=function () {
+        location.href='主界面.html';
+    }
+    document.getElementById('submit').onclick=function () {
+        var task={
+            name:"",
+            detail:""
+        }
+        task.name=document.getElementById('name').value;
+        task.detail=document.getElementById('content').value;
+        var time=document.getElementById('time').value.split('-');
+        for(let i=0;i<time.length;i++){
+            time[i]=parseInt(time[i])
+        }
+        task.ddl=time;
+        // alert(JSON.stringify(task))
+        var heap=[];
+        heap.push(task);
+        heap.sort(function (a,b) {
+            var f_a,f_b;
+            if(a.ddl[0]!==b.ddl[0]){
+                f_a=a.ddl[0];
+                f_b=b.ddl[0];
+            }
+            else if(a.ddl[1]!==b.ddl[1]){
+                f_a=a.ddl[1];
+                f_b=b.ddl[1]
+            }
+            else{
+                f_a=a.ddl[2];
+                f_b=b.ddl[2]
+            }
+            return f_a-f_b;
+        })
+        localStorage.setItem('heap',JSON.stringify(heap));
+
+    }
+
+
+</script>
+
+</body>
+</html>

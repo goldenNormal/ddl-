@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主界面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../res/bootstrap-4.4.1/css/bootstrap.min.css">
+    <script src="../res/jquery.js"></script>
+    <script src="../res/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../res/mdui-v0.4.3/css/mdui.css">
+    <script>
+        var mode=localStorage.getItem('mode');
+        var keyword,title;
+        if(mode===undefined){
+            location.href='首页.html'
+        }
+        if(mode==="0"){
+            keyword='作业';
+            title='学习模式'
+        }
+        else{
+            keyword='任务'
+            title='工作模式'
+        }
+        document.title=title
+    </script>
+    <style>
+        body{
+            background: white;
+        }
+        #main{
+            width:60%;
+            height: 600px;
+            margin-top: 0px;
+            background-color: #BAD59B;
+
+        }
+        h1{
+            font-family: "Segoe UI";
+            font-weight: normal;
+            letter-spacing: 5px;
+        }
+        .border-black{
+            border: 1px solid white;
+        }
+
+        #queue{
+            margin-top: 80px;
+            margin-left: 100px;
+            float: left;
+        }
+        small{
+            font-size: 15px;
+            color:blue;
+            margin-left: 30px;
+            margin-top: 95px;
+            float: left;
+        }
+        #task{
+            background-color: #90a4ae;
+            margin-top: 50px;
+            margin-left: 40px;
+           padding-top: 20px;
+            font-size: 25px;
+            color: green;
+        }
+        .option{
+            /*margin-top: 80px;*/
+            float: right;
+            width: 100%;
+            height: 40%;
+            clear: right;
+            visibility:hidden;
+            padding-bottom: 0;
+        }
+
+
+#add{
+    margin-top: 80px;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+        #none{
+            visibility: hidden;
+            color: green;
+            font-size: 20px;
+            margin-top: 70px;
+            margin-left: 60px;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 class="col" style="text-align: center ;margin-top:30px"> 欢迎来到ddl管理系统</h1>
+<div id="main" class="mdui-container">
+    <div class="row" id="row" >
+
+        <div class="mdui-panel mdui-panel-popout col-3" mdui-panel id="queue">
+
+            <div class="mdui-panel-item">
+                <div class="mdui-panel-item-header"><h1>作业队列</h1></div>
+
+            </div>
+
+
+        </div><small >下一个:</small>
+
+        <div class="btn btn-link col-3" id="task" >作业1
+            <button type="button" class="btn btn-primary col-12 option" id="detail" >查看详情</button>
+            <button type="button" class="btn btn-success col-12 option" id="finish" >已解决</button>
+        </div>
+        <span id="none">无</span>
+    </div>
+
+    <div class="row">
+        <button type="button" class="btn btn-danger col-2 " id="add" >添加作业</button>
+    </div>
+    </div>
+</div>
+<script>
+    document.getElementById('task').onmouseover=function () {
+        let options = this.getElementsByClassName('option');
+        for(let i=0;i<options.length;i++){
+
+            options[i].style.visibility='visible'
+        }
+        this.style.paddingTop=0;
+        this.style.fontSize="15px";
+    }
+    document.getElementById('task').onmouseleave=function () {
+        let options = this.getElementsByClassName('option');
+        for(let i=0;i<options.length;i++){
+
+            options[i].style.visibility='hidden';
+        }
+        this.style.paddingTop="20px";
+        this.style.fontSize="25px";
+    }
+
+    document.getElementById('add').onclick=function () {
+        location.href='添加作业.html'
+    }
+
+    //获取首个ddl的作业名,主动加载
+    var heap=localStorage.getItem('heap');
+    heap=JSON.parse(heap)
+    // alert(JSON.stringify(heap))
+    if(heap===null || heap.length===0){
+
+        let task = document.getElementById('task');
+        var row=document.getElementById('row');
+        row.removeChild(task);
+        document.getElementById('none').style.visibility='visible';
+    }
+    else{
+        let task=heap[0];
+        // alert(JSON.stringify(task));
+        document.getElementById('task').innerHTML=`${task.name}
+            <button type="button" class="btn btn-primary col-12 option" id="detail" >查看详情</button>
+            <button type="button" class="btn btn-success col-12 option" id="finish" >已解决</button>
+            `;
+
+    }
+
+
+    document.getElementById('finish').onclick=function () {
+        var heap=localStorage.getItem('heap');
+        heap=JSON.parse(heap)
+        heap.shift();
+        localStorage.setItem('heap',JSON.stringify(heap));
+        location.reload();
+    }
+
+    document.getElementById('detail').onclick=function () {
+        location.href='详情.html'
+    }
+
+
+
+</script>
+</body>
+</html>

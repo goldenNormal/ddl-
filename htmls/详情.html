@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../res/bootstrap-4.4.1/css/bootstrap.min.css">
+    <script src="../res/jquery.js"></script>
+    <script src="../res/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../res/mdui-v0.4.3/css/mdui.css">
+    <style>
+        span{
+            font-size: 20px;
+            color:green;
+        }
+
+        #main{
+            width:600px;
+
+            margin-left: 30%;
+            margin-right: 30%;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container" id="main">
+    <ul>
+
+    </ul>
+    <a id="back" class="btn btn-warning">返回</a>
+</div>
+
+<script>
+
+    document.getElementById('back').onclick=function () {
+        location.href='主界面.html';
+    }
+
+
+
+    var heap=localStorage.getItem('heap');
+    heap=JSON.parse(heap)
+    if(heap!==null && heap.length>0){
+        for(let i =0;i<heap.length;i++){
+            let task=heap[i];
+            var ul=document.getElementsByTagName('ul')[0];
+            ul.innerHTML=ul.innerHTML+`<li>
+    <div class="row">
+        <span class="col-3">作业名</span>
+        <p>
+            ${task.name}
+        </p>
+    </div>
+    <div class="row">
+        <span class="col-3">ddl日期</span>
+        <p>
+            ${task.ddl.join('-')}
+        </p>
+    </div>
+
+    <div class="row">
+        <span class="col-3">详情</span>
+        <p>
+            ${task.detail}
+        </p>
+    </div>
+        </li>`;
+        }
+    }
+    else{
+        var ul=document.getElementsByTagName('ul')[0];
+        ul.innerHTML='空空如也'
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../res/bootstrap-4.4.1/css/bootstrap.min.css">
+    <script src="../res/jquery.js"></script>
+    <script src="../res/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../res/mdui-v0.4.3/css/mdui.min.css">
+    <style>
+        body{
+            background: white;
+        }
+        #main{
+            width:60%;
+            height: 600px;
+            margin-top: 0px;
+            background-color: #BAD59B;
+
+        }
+        h1{
+            font-family: "Segoe UI";
+            font-weight: normal;
+            letter-spacing: 5px;
+        }
+        .border-black{
+            border: 1px solid white;
+        }
+        #study{
+            float: left;
+            margin-top: 200px;
+            margin-left: 200px;
+            width: 200px;
+            height: 200px;
+
+        }
+        #work{
+            float: right;
+            margin-top: 200px;
+            margin-right: 200px;
+            width: 200px;
+            height: 200px;
+        }
+        .icon{
+            width: 60%;
+            height: 80%;
+            padding-left: 0%;
+            padding-top: 20%;
+        }
+
+        .mode:hover{
+            background-color: rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .text{
+            position: absolute;
+            font-size: 30px;
+            text-align: center;
+            color: white;
+            left: 35px;
+            top:90px;
+        }
+    </style>
+</head>
+<body>
+<h1 class="col" style="text-align: center ;margin-top:30px"> 欢迎来到ddl管理系统</h1>
+<div id="main" class="container">
+<div class="mdui-img-circle border-black mode btn" id="study">
+    <img src="../asset/order.png " alt=""  class="icon">
+    <span class="text" hidden="true">学习模式</span>
+</div>
+    <div class="mdui-img-circle border-black mode btn" id="work" >
+        <img src="../asset/work.png " alt=""  class="icon">
+        <span class="text" hidden="true">工作模式</span>
+    </div>
+
+</div>
+
+<script>
+
+    //设计按钮的样式
+    let modes = document.getElementsByClassName("mode");
+
+    for(let i=0;i<modes.length;i++){
+        modes[i].onmouseover=function () {
+            this.getElementsByClassName("icon")[0].style.opacity=0.1;
+            this.getElementsByClassName('text')[0].hidden=false;
+        }
+        modes[i].onmouseout=function () {
+            this.getElementsByClassName("icon")[0].style.opacity=1;
+            this.getElementsByClassName('text')[0].hidden=true;
+        }
+    }
+    //设置跳转
+    document.getElementById("study").onclick=function () {
+        location.href='主界面.html';
+        // mode_data={"mode":"0"};
+        localStorage.setItem("mode",0);
+
+    }
+    document.getElementById("work").onclick=function () {
+        location.href='主界面.html';
+
+        localStorage.setItem("mode",1);
+
+    }
+
+
+</script>
+</body>
+</html>
